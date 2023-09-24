@@ -11,6 +11,8 @@ CONTAINER_WORK_DIR=/tmp/work-dir-ebuild-overlay
 working_container=$(buildah from $BASE_CONTAINER)
 
 buildah copy $working_container "$FILES_DIR/*" $CONTAINER_WORK_DIR
+{% if custom_ebuild_repository.cert_required -%}
 buildah copy $working_container {{ custom_ebuild_repository.cert_path }} $CONTAINER_WORK_DIR
+{% endif %}
 buildah run $working_container -- /bin/env bash $CONTAINER_WORK_DIR/setup.bash $WORK_DIR
 buildah commit $working_container $CONTAINER_TAG

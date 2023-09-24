@@ -1,7 +1,7 @@
 import yaml
 from jinja2 import Environment, FileSystemLoader
 from pathlib import Path
-import os
+import shutil
 
 TEMPLATES_DIR="templates/"
 CONFIG_PATH="config.yaml"
@@ -20,7 +20,7 @@ def get_use_flag_str(use_flag_obj):
     return added_flags + " " + removed_flags
 
 def process_ebuild_repository_data(ebuild_repo_data):
-    if ebuild_repo_data == False:
+    if ebuild_repo_data in (False, None):
         return False
     if ebuild_repo_data["certificate_file_name"] is not None:
         ebuild_repo_data["cert_required"] = True
@@ -46,7 +46,7 @@ environment = Environment(loader=FileSystemLoader("templates/"))
 
 template_names = environment.list_templates()
 
-os.remove(TEMPLATES_DIR)
+shutil.rmtree(RENDERED_DIR)
 
 for template_name in template_names:
     template = environment.get_template(template_name)

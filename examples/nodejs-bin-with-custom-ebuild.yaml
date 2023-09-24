@@ -1,0 +1,23 @@
+portage_mirror:
+    sync_type: git
+    uri: https://github.com/gentoo-mirror/gentoo.git
+build:
+    threads: 12
+    max_parallel_jobs: 12
+    global_use_flags:
+        add:
+        remove:
+            - systemd
+            - openrc
+            - man
+            - bluetooth
+            - X
+            - wayland
+    package_use_flags:
+custom_ebuild_repository:
+    name: oxa
+    uri: https://github.com/nezartarbin/carboxamide-portage-overlay.git
+    sync_type: git
+target:
+    container_tag: mycontainers/nodejs:bin
+    package_atoms: net-libs/nodejs-bin::oxa
