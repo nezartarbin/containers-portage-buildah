@@ -1,0 +1,20 @@
+portage_mirror:
+    sync_type: git
+    uri: https://github.com/gentoo-mirror/gentoo.git
+build:
+    threads: 12
+    max_parallel_jobs: 12
+    global_use_flags:
+        add:
+        remove:
+            - systemd
+            - openrc
+            - man
+            - bluetooth
+            - X
+            - wayland
+    package_use_flags:
+custom_ebuild_repository: false
+target:
+    container_tag: mycontainers/python
+    package_atoms: dev-lang/python
